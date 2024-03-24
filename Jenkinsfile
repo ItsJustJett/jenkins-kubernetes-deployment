@@ -33,10 +33,10 @@ pipeline {
       steps {
         script {
             // Apply deployment configuration
-            sh "kubectl apply -f deployment.yaml"
+            sh "/usr/local/bin/kubectl apply -f deployment.yaml"
 
             // Apply service configuration
-            sh "kubectl apply -f service.yaml"
+            sh "/usr/local/bin/kubectl apply -f service.yaml"
         }
       }
     }
