@@ -44,14 +44,15 @@ pipeline {
     // }
 
     stage('Install kubectl') {
-        steps {
-          script {
-            // Download and install kubectl
-            sh "curl -LO https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl"
-            sh "chmod +x kubectl"
-            sh "sudo mv kubectl $KUBECTL_PATH"
-          }
+      steps {
+        script {
+          // Download and install kubectl
+          sh "curl -LO https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/windows/amd64/kubectl.exe"
+          sh "mv kubectl.exe $KUBECTL_PATH"
+          // Add kubectl to PATH
+          env.PATH += ":${env.JENKINS_HOME}/tools"
         }
+      }
     }
 
     stage('Deploy to Minikube') {
