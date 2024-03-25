@@ -31,17 +31,6 @@ pipeline {
         }
       }
     }
-    // stage('Deploying React.js container to Kubernetes') {
-    //   steps {
-    //     script {
-    //         // Apply deployment configuration
-    //         sh "/usr/local/bin/kubectl apply -f deployment.yaml"
-
-    //         // Apply service configuration
-    //         sh "/usr/local/bin/kubectl apply -f service.yaml"
-    //     }
-    //   }
-    // }
 
     stage('Install kubectl') {
       steps {
@@ -64,8 +53,8 @@ pipeline {
       steps {
         script {
           // Apply Kubernetes manifests using the installed kubectl
-          sh "$KUBECTL_PATH apply -f deployment.yaml"
-          sh "$KUBECTL_PATH apply -f service.yaml"
+          sh "$KUBECTL_PATH/kubectl.exe apply -f deployment.yaml"
+          sh "$KUBECTL_PATH/kubectl.exe apply -f service.yaml"
         }
       }
     }
