@@ -38,11 +38,11 @@ pipeline {
           // Create the directory if it doesn't exist
           sh "mkdir -p $KUBECTL_PATH"
           // Download kubectl
-          sh "curl -LO https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/windows/amd64/kubectl.exe"
+          sh "curl -LO https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl"
           // Move kubectl to the installation directory
-          sh "mv kubectl.exe $KUBECTL_PATH"
+          sh "mv kubectl $KUBECTL_PATH"
           // Make kubectl executable (optional)
-          sh "chmod +x $KUBECTL_PATH/kubectl.exe"
+          sh "chmod +x $KUBECTL_PATH/kubectl"
           // Add kubectl directory to PATH
           env.PATH += ":$KUBECTL_PATH"
         }
