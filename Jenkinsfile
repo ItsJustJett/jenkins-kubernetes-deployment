@@ -2,7 +2,7 @@ pipeline {
   environment {
     dockerimagename = "jettsonoda/react-app"
     dockerImage = ""
-    KUBECTL_VERSION = '1.9' // Specify the version of kubectl you want to install
+    KUBECTL_VERSION = '1.9.0' // Specify the version of kubectl you want to install
     KUBECTL_PATH = "${env.JENKINS_HOME}/tools/kubectl" // Define the path where kubectl will be installed
   }
   agent any
