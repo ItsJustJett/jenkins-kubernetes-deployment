@@ -54,8 +54,8 @@ pipeline {
         script {
           // Apply Kubernetes manifests using the installed kubectl
           // sh "$KUBECTL_PATH/kubectl config use-context minikube" 
-          sh "$KUBECTL_PATH/kubectl apply -f deployment.yaml"
-          sh "$KUBECTL_PATH/kubectl apply -f service.yaml"
+          sh "$KUBECTL_PATH/kubectl apply -f deployment.yaml --context minikube"
+          sh "$KUBECTL_PATH/kubectl apply -f service.yaml --context minikube"
         }
       }
     }
