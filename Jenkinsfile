@@ -3,7 +3,7 @@ pipeline {
     dockerimagename = "jettsonoda/react-app"
     dockerImage = ""
     KUBECTL_VERSION = '1.9' // Specify the version of kubectl you want to install
-    KUBECTL_PATH = '/usr/local/bin/kubectl' // Define the path where kubectl will be installed
+    KUBECTL_PATH = "${env.JENKINS_HOME}/tools/kubectl" // Define the path where kubectl will be installed
   }
   agent any
   stages {
@@ -46,11 +46,16 @@ pipeline {
     stage('Install kubectl') {
       steps {
         script {
-          // Download and install kubectl
+          // Create the directory if it doesn't exist
+          sh "mkdir -p $KUBECTL_PATH"
+          // Download kubectl
           sh "curl -LO https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/windows/amd64/kubectl.exe"
+          // Move kubectl to the installation directory
           sh "mv kubectl.exe $KUBECTL_PATH"
-          // Add kubectl to PATH
-          env.PATH += ":${env.JENKINS_HOME}/tools"
+          // Make kubectl executable (optional)
+          sh "chmod +x $KUBECTL_PATH/kubectl.exe"
+          // Add kubectl directory to PATH
+          env.PATH += ":$KUBECTL_PATH"
         }
       }
     }
