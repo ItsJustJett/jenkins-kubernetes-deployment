@@ -4,6 +4,8 @@ pipeline {
     dockerImage = ""
     KUBECTL_VERSION = '1.9.0' // Specify the version of kubectl you want to install
     KUBECTL_PATH = "${env.JENKINS_HOME}/tools/kubectl" // Define the path where kubectl will be installed
+    KUBECONFIG_FILE = "${env.WORKSPACE}/kubeconfig.yaml" // Path to the kubeconfig file
+    KUBE_CREDENTIAL_ID = 'minikube' // Credential ID for Kubernetes
   }
   agent any
   stages {
