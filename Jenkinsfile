@@ -48,21 +48,32 @@ pipeline {
       }
     }
       stage('Deploying React.js container to Kubernetes') {
-        steps {
-          script {
-            node{
-            // sh ‘kubectl apply -f deployment.yaml’
-            // sh ‘kubectl apply -f service.yaml’
-            withKubeConfig() {
-            sh "$KUBECTL_PATH/kubectl apply -f deployment.yaml"
-            sh "$KUBECTL_PATH/kubectl apply -f service.yaml"
+      steps {
+        script {
+          // Set KUBECONFIG environment variable
+          withEnv(['KUBECONFIG=' + KUBECONFIG_FILE]) {
+            // Get kubeconfig from Jenkins credentials and write to file
+            withCredentials([certificate(credentialsId: KUBE_CREDENTIAL_ID, variable: 'kube-client-certificate'),
+                             privateKey(credentialsId: KUBE_CREDENTIAL_ID, variable: 'kube-client-key')]) {
+              sh '''
+                echo "apiVersion: v1
+                kind: Config
+                users:
+                - name: jenkins
+                  user:
+                    client-certificate-data: ${kubeClientCertificate}
+                    client-key-data: ${kubeClientKey}
+                " > ${KUBECONFIG_FILE}
+              '''
             }
-            // kubernetesDeploy(configs: "deployment.yaml", 
-            //                                "service.yaml")
-            }
+            
+            // Apply Kubernetes manifests
+            sh "kubectl apply -f deployment.yaml"
+            sh "kubectl apply -f service.yaml"
           }
         }
       }
+    }
     
     
   }
