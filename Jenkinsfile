@@ -29,19 +29,22 @@ pipeline {
         }
       }
     }
-    stage('Deploying React.js container to Kubernetes') {
-      steps {
-        script {
-          // sh ‘kubectl apply -f deployment.yaml’
-          // sh ‘kubectl apply -f service.yaml’
-          withKubeConfig() {
-          sh ‘kubectl apply -f deployment.yaml’
-          sh ‘kubectl apply -f service.yaml’
-    }
-          // kubernetesDeploy(configs: "deployment.yaml", 
-          //                                "service.yaml")
+    node{
+      stage('Deploying React.js container to Kubernetes') {
+        steps {
+          script {
+            // sh ‘kubectl apply -f deployment.yaml’
+            // sh ‘kubectl apply -f service.yaml’
+            withKubeConfig() {
+            sh ‘kubectl apply -f deployment.yaml’
+            sh ‘kubectl apply -f service.yaml’
+            }
+            // kubernetesDeploy(configs: "deployment.yaml", 
+            //                                "service.yaml")
+          }
         }
       }
     }
+    
   }
 }
